@@ -16,6 +16,26 @@ public class BaseClass {
 	
 	WebDriver driver;
 	
+	
+	protected WebDriver firefox() {
+		System.setProperty("webdriver.gecko.driver", "./Drivers/geckodriver.exe");
+        return new FirefoxDriver();
+    }
+
+    protected WebDriver chrome() {
+    	System.setProperty("webdriver.chrome.driver","./Drivers/chromedriver.exe");
+        return new ChromeDriver();
+    }
+    
+    protected WebDriver IE() {
+    	System.setProperty("webdriver.chrome.driver","./Drivers/IEDriverServer.exe");
+        return new ChromeDriver();
+    }
+    
+    
+}
+    
+	/*
 	@BeforeClass
 	@Parameters({"browser"})
 	public void setup(String browserName) {
@@ -43,8 +63,7 @@ public class BaseClass {
 	@AfterClass
 	public void teardown() {
 		
-		BrowserFactory.quitBrowser(driver);
+		driver.quit();
 		 
 	}
-
-}
+*/

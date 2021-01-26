@@ -16,6 +16,7 @@ public class IndexPage {
 	public IndexPage(WebDriver ldriver) {
 
 		this.driver = ldriver;
+		PageFactory.initElements(ldriver, this);
 		
 	}
 
@@ -29,22 +30,26 @@ public class IndexPage {
 	//WebElement minPrice;
 	//Select lessPrice = new Select(minPrice);
 	@FindBy(id = "forsale_price_min")
-	WebElement dropdownList;
+	WebElement minPrice;
 
-	public Select getSelectOptions() {
-	  return new Select(dropdownList);
-	}
+	//public Select getSelectOptions() {
+	//  return new Select(dropdownList);
+	//}
+	
+	public Select getSelectOptions(WebElement we) {
+		  return new Select(we);
+		}
 	//@FindBy(id = "forsale_price_min")
 	//WebElement minPrice;
 	//Select lessPrice = new Select(minPrice);
-	//@FindBy(id = "forsale_price_max")
-	//WebElement maxPrice;
+	@FindBy(id = "forsale_price_max")
+	WebElement maxPrice;
 	//Select morePrice = new Select(maxPrice);
-	//@FindBy(id = "property_type")
-	//WebElement propertyType;
+	@FindBy(id = "property_type")
+	WebElement propertyType;
 	//Select pType = new Select(propertyType);
-	//@FindBy(id = "beds_min")
-	//WebElement bedroom;
+	@FindBy(id = "beds_min")
+	WebElement bedroom;
 	//Select nBedroom = new Select(bedroom);
 	@FindBy(xpath = "//span[@class=\"search-input-location-placeholder\"]")
 	WebElement reminderMessage;
@@ -56,6 +61,7 @@ public class IndexPage {
 		} catch (InterruptedException e) {
 
 		}
+
 
 		acceptCookieButton.click();
 	}
@@ -79,39 +85,53 @@ public class IndexPage {
 	}
 
 	
-	public void selectMinPrice(int i) {
-		List<WebElement> minOPtions = getSelectOptions().getOptions();
-		if (i >= 0 && i < minOPtions.size()) {
-
-			getSelectOptions().selectByIndex(i);
+	public String selectPrice(int i) {
+		List<WebElement> minOptions = getSelectOptions(minPrice).getOptions();
+		if (i >= 0 && i < minOptions.size()) {
+			
+			getSelectOptions(minPrice).selectByIndex(i);
+			
+			 return minOptions.get(i).getText();
 		}
+		return null;
+		
+		
 	}
 
-/*
-	public void selectMaxPrice(int i) {
-		List<WebElement> maxOPtions = morePrice.getOptions();
-		if (i >= 0 && i < maxOPtions.size()) {
 
-			morePrice.selectByIndex(i);
+	public String selectMaxPrice(int i) {
+		List<WebElement> maxOptions = getSelectOptions(maxPrice).getOptions();
+		if (i >= 0 && i < maxOptions.size()) {
+
+			getSelectOptions(maxPrice).selectByIndex(i);
+			
+			return maxOptions.get(i).getText();
 		}
+		return null;
 	}
 
-	public void selectPropertyType(int i) {
-		List<WebElement> pOptions = pType.getOptions();
-		if (i >= 0 && i < pOptions.size()) {
+	public String selectPropertyType(int i) {
+		List<WebElement> propertyTypeOptions = getSelectOptions(propertyType).getOptions();
+		if (i >= 0 && i < propertyTypeOptions.size()) {
 
-			pType.selectByIndex(i);
+			getSelectOptions(propertyType).selectByIndex(i);
+			
+			return propertyTypeOptions.get(i).getText();
 		}
+		return null;
 	}
 
-	public void selectBedroomN(int i) {
-		List<WebElement> bOPtions = nBedroom.getOptions();
-		if (i >= 0 && i < bOPtions.size()) {
+	public String selectBedroomN(int i) {
+		List<WebElement> bedroomOptions = getSelectOptions(bedroom).getOptions();
+		if (i >= 0 && i < bedroomOptions.size()) {
 
-			nBedroom.selectByIndex(i);
+			getSelectOptions(bedroom).selectByIndex(i);
+			
+			return bedroomOptions.get(i).getText();
 		}
+		return null;
 	}
-	*/
+	
 	public String getReminderMessage() {
 		return reminderMessage.getText();
 	}
